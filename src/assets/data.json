@@ -1,0 +1,94 @@
+{
+    "categorys": {
+        "game-bj": [
+            {
+                "category": "game-bj",
+                "css": {
+                    "backgroundSize": "512px 512px",
+                    "backgroundPositionX": "0vw",
+                    "backgroundPositionY": "0vw",
+                    "width": "512px",
+                    "height": "512px"
+                },
+                "imageName": "bg",
+                "rawUrl": "game/bj/游戏背景.png",
+                "rect": [
+                    0,
+                    0,
+                    512,
+                    512
+                ],
+                "width": 1920,
+                "height": 1080,
+                "name": "游戏背景.png"
+            }
+        ],
+        "game-bullet": [
+            {
+                "category": "game-bullet",
+                "css": {
+                    "backgroundSize": "62px 108px",
+                    "backgroundPositionX": "0vw",
+                    "backgroundPositionY": "0vw",
+                    "width": "62px",
+                    "height": "108px"
+                },
+                "imageName": "bullet",
+                "rawUrl": "game/bullet/子弹.png",
+                "rect": [
+                    0,
+                    0,
+                    62,
+                    108
+                ],
+                "width": 62,
+                "height": 108,
+                "name": "子弹.png"
+            }
+        ],
+        "game-hero": [
+            {
+                "category": "game-hero",
+                "css": {
+                    "backgroundSize": "186px 130px",
+                    "backgroundPositionX": "0vw",
+                    "backgroundPositionY": "0vw",
+                    "width": "186px",
+                    "height": "130px"
+                },
+                "imageName": "hero",
+                "rawUrl": "game/hero/玩家飞机.png",
+                "rect": [
+                    0,
+                    0,
+                    186,
+                    130
+                ],
+                "width": 186,
+                "height": 130,
+                "scaleX": 0.5,
+                "scaleY": 0.5,
+                "name": "玩家飞机.png"
+            }
+        ]
+    },
+    "rawUrls": [
+        {
+            "imageName": "bg",
+            "rawUrl": "game/bj/游戏背景.png"
+        },
+        {
+            "imageName": "bullet",
+            "rawUrl": "game/bullet/子弹.png"
+        },
+        {
+            "imageName": "hero",
+            "rawUrl": "game/hero/玩家飞机.png"
+        }
+    ],
+    "imageIds": [
+        "bg",
+        "bullet",
+        "hero"
+    ]
+}

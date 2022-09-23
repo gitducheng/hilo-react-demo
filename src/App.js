@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { AssetFectory } from './game/lib/Asset'
+import StageFectory from './game/stage'
+import BgFectory from './game/bg'
+import PlayerFectory from './game/player'
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    init()
+  }, [])
+
+  const init = async () => {
+    const Asset = AssetFectory()
+    const assets = new Asset()
+    assets.on('load', (e) => {
+      // const num =
+      //   +(e.target.queue.getLoaded() / e.target.queue.getTotal()).toFixed(2) *
+      //   50
+      // console.log(num)
+    })
+    const {
+      spsource: { layout },
+    } = await assets.load()
+    console.log(layout)
+
+    const gameMain = StageFectory()
+    document.getElementById('myCanvas').appendChild(gameMain.stage.canvas)
+    const { stage, ticker } = gameMain
+
+    const bgScence = new BgFectory({
+      backgroundPos: layout['game-bj']['游戏背景.png'],
+    })
+
+    const playerScence = new PlayerFectory({
+      stage: stage,
+      x: (innerWidth - layout['game-hero']['玩家飞机.png'].width / 2) / 2,
+      y: innerHeight - layout['game-hero']['玩家飞机.png'].height - 20,
+      backgroundPos: layout['game-hero']['玩家飞机.png'],
+      scaleX: 0.5,
+      scaleY: 0.5,
+    })
+
+    stage.on(Hilo.event.POINTER_MOVE, (e) => {
+      playerScence.move(
+        e.x - playerScence.player.width / 2 / 2,
+        e.y - playerScence.player.height / 2 / 2
+      )
+    })
+
+    stage.addChild(bgScence, playerScence)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='myCanvas'>
+      <div style={{ paddingLeft: '50%' }}>1</div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
