@@ -48,7 +48,7 @@ const App = () => {
     })
     console.log('app.js')
     stage.addChild(bgScence, playerScence)
-    ticker.addTick(playerScence)
+    // ticker.addTick(playerScence)
   }
 
   return (

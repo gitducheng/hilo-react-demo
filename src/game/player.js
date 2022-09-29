@@ -9,8 +9,7 @@ export default class Player extends Hilo.Container {
     // properties中的x,y,scaleX,scaleY会影响，所以重新初始化
     // this.x = 0
     // this.y = 0
-    // this.scaleX = 1
-    // this.scaleY = 1
+
     this.player = null
     this.stage = null
     this.bulletPng = null
@@ -44,6 +43,7 @@ export default class Player extends Hilo.Container {
     })
 
     this.player.addTo(this, -1)
+    this.generate()
   }
 
   move(x, y) {
@@ -51,25 +51,20 @@ export default class Player extends Hilo.Container {
     this.player.y = y / this.stage.scaleY
   }
 
-  tick() {
+  onUpdate() {
     const currentTime = Date.now()
     if (currentTime - this._preShootTime > 1000) {
       this.shoot()
       this._preShootTime = currentTime
     }
 
-    if (currentTime - this._preGenerateTime > 2000) {
-      this.generate()
-      this._preGenerateTime = currentTime
-    }
-
-    const _bulletGroup = this.bulletGroup
-    const _enemyGroup = this.enemyGroup
+    const _bulletGroup = this.children.slice(2)
+    const _enemyGroup = this.children[1].children
 
     _bulletGroup.forEach((bulletItem) => {
       _enemyGroup.forEach((enemyItem) => {
-        // console.log(bulletItem.getBounds()) //hitTestObject
-        if (enemyItem.isCollideWith(bulletItem)) {
+        console.log(_bulletGroup.length, _enemyGroup.length)
+        if (bulletItem.children[0].hitTestObject(enemyItem, true)) {
           enemyItem.removeFromParent()
           bulletItem.removeFromParent()
         }
@@ -85,10 +80,11 @@ export default class Player extends Hilo.Container {
       x: this.player.x,
       y: this.player.y,
       player: this.player,
-    })
+    }).addTo(this)
 
     const bIndex = this.bulletGroup.length - 1
     const _bulletGroup = this.bulletGroup
+
     Hilo.Tween.to(
       bullet,
       {
@@ -98,15 +94,24 @@ export default class Player extends Hilo.Container {
         duration: (innerHeight / 300) * 1000,
         // delay: 100,
         ease: Hilo.Ease.Quad.EaseIn,
+        onUpdate: function () {
+          // _bulletGroup.forEach((bulletItem) => {
+          // _enemyGroup.forEach((enemyItem) => {
+          //   if (bullet.hitTestObject(enemyItem, true)) {
+          //     enemyItem.removeFromParent()
+          //     bullet.removeFromParent()
+          //   }
+          // })
+          // })
+        },
         onComplete: function () {
-          _bulletGroup.splice(bIndex, 1)
+          // _bulletGroup.splice(bIndex, 1)
           bullet.removeFromParent()
         },
       }
     )
 
-    this.stage.addChild(bullet)
-    this.bulletGroup.push(bullet)
+    // this.bulletGroup.push(bullet)
   }
 
   generate() {
@@ -116,27 +121,26 @@ export default class Player extends Hilo.Container {
       scaleY: this._scaleY,
       x: this.player.x,
       y: this.player.y,
-    })
+    }).addTo(this)
 
     const eIndex = this.enemyGroup.length - 1
     const _enemyGroup = this.enemyGroup
-    Hilo.Tween.to(
-      enemy,
-      {
-        y: innerHeight + 200,
-      },
-      {
-        duration: (innerHeight / 100) * 1000,
-        // delay: 100,
-        ease: Hilo.Ease.Quad.EaseIn,
-        onComplete: function () {
-          _enemyGroup.splice(eIndex, 1)
-          enemy.removeFromParent()
-        },
-      }
-    )
+    // Hilo.Tween.to(
+    //   enemy,
+    //   {
+    //     y: innerHeight + 200,
+    //   },
+    //   {
+    //     duration: (innerHeight / 100) * 1000,
+    //     // delay: 100,
+    //     ease: Hilo.Ease.Quad.EaseIn,
+    //     onComplete: function () {
+    //       _enemyGroup.splice(eIndex, 1)
+    //       enemy.removeFromParent()
+    //     },
+    //   }
+    // )
 
-    this.stage.addChild(enemy)
-    this.enemyGroup.push(enemy)
+    // this.enemyGroup.push(enemy)
   }
 }

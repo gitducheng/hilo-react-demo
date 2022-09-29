@@ -8,7 +8,8 @@ export default class Player extends Hilo.Container {
   constructor(properties) {
     super()
 
-    this.enemy = null
+    this.props = properties
+    this._preGenerateTime = Date.now()
     this._scaleX = 1 // 下划线开头，避免覆盖
     this._scaleY = 1
     this.init(properties)
@@ -20,27 +21,36 @@ export default class Player extends Hilo.Container {
     this._scaleX = scaleX
     this._scaleY = scaleY
 
-    this.enemy = new Hilo.Bitmap({
+    const enemy = new Hilo.Bitmap({
       x: rnd(0, innerWidth) * scaleX,
       y: 0,
       image: backgroundPos.image,
       rect: backgroundPos.rect,
       scaleX: scaleX,
       scaleY: scaleY,
-    })
+    }).addTo(this)
 
-    this.enemy.addTo(this, -1)
+    Hilo.Tween.to(
+      enemy,
+      {
+        y: innerHeight + 200,
+      },
+      {
+        duration: (innerHeight / 100) * 1000,
+        // delay: 100,
+        ease: Hilo.Ease.Quad.EaseIn,
+        onComplete: function () {
+          enemy.removeFromParent()
+        },
+      }
+    )
   }
 
-  isCollideWith(bulletInfo) {
-    let bulletX = bulletInfo._bullet.x + bulletInfo._bullet.width / 2
-    let bulletY = bulletInfo._bullet.y + bulletInfo._bullet.height / 2
-    // console.log(bulletX, bulletY)
-    return !!(
-      bulletX >= this.enemy.x &&
-      bulletX <= this.enemy.x + this.enemy.width &&
-      bulletY >= this.enemy.y &&
-      bulletY <= this.enemy.y + this.enemy.height
-    )
+  onUpdate() {
+    const currentTime = Date.now()
+    if (currentTime - this._preGenerateTime > 1000) {
+      this.init(this.props)
+      this._preGenerateTime = currentTime
+    }
   }
 }
