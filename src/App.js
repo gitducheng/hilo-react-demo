@@ -16,12 +16,10 @@ const App = () => {
       // const num =
       //   +(e.target.queue.getLoaded() / e.target.queue.getTotal()).toFixed(2) *
       //   50
-      // console.log(num)
     })
     const {
       spsource: { layout },
     } = await assets.load()
-    console.log(layout)
 
     const gameMain = StageFectory()
     document.getElementById('myCanvas').appendChild(gameMain.stage.canvas)
@@ -36,6 +34,8 @@ const App = () => {
       x: (innerWidth - layout['game-hero']['玩家飞机.png'].width / 2) / 2,
       y: innerHeight - layout['game-hero']['玩家飞机.png'].height - 20,
       backgroundPos: layout['game-hero']['玩家飞机.png'],
+      bulletPng: layout['game-bullet']['子弹.png'],
+      enemyPng: layout['game-enemy']['敌人.png'],
       scaleX: 0.5,
       scaleY: 0.5,
     })
@@ -46,8 +46,9 @@ const App = () => {
         e.y - playerScence.player.height / 2 / 2
       )
     })
-
+    console.log('app.js')
     stage.addChild(bgScence, playerScence)
+    ticker.addTick(playerScence)
   }
 
   return (

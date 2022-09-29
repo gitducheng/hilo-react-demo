@@ -70,6 +70,31 @@
                 "scaleY": 0.5,
                 "name": "玩家飞机.png"
             }
+        ],
+        "game-enemy": [
+            {
+                "category": "game-enemy",
+                "css": {
+                    "backgroundSize": "120px 79px",
+                    "backgroundPositionX": "0vw",
+                    "backgroundPositionY": "0vw",
+                    "width": "120px",
+                    "height": "79px"
+                },
+                "imageName": "enemy",
+                "rawUrl": "game/enemy/敌人.png",
+                "rect": [
+                    0,
+                    0,
+                    120,
+                    79
+                ],
+                "width": 120,
+                "height": 79,
+                "scaleX": 0.5,
+                "scaleY": 0.5,
+                "name": "敌人.png"
+            }
         ]
     },
     "rawUrls": [
@@ -84,11 +109,16 @@
         {
             "imageName": "hero",
             "rawUrl": "game/hero/玩家飞机.png"
+        },
+        {
+            "imageName": "enemy",
+            "rawUrl": "game/enemy/敌人.png"
         }
     ],
     "imageIds": [
         "bg",
         "bullet",
-        "hero"
+        "hero",
+        "enemy"
     ]
 }
